@@ -14,7 +14,13 @@ public class Classifier {
 		double ent = 0.0;
 		HashMap<Double, Integer> classCounts = new HashMap<Double, Integer>();
 		for(int i = 0; i < instances.numInstances(); i++) {
-			double cls = instances.get(i).classValue();
+			double cls;
+			try {
+				cls = instances.get(i).classValue();
+			} catch (Exception e) {
+				cls = instances.get(i).value(instances.numAttributes() - 1);
+			}
+			
 			Integer count = classCounts.get(cls);
 			
 			if(count == null) {
