@@ -103,8 +103,8 @@ public class TestClassifier {
 	public void testInformationGain() throws IOException {
 		Instances instances = new Instances(new FileReader("src/test/resources/ig.arff"));
 
-		assertEquals(0.693, classifier.informationGain(instances, 1));
-		assertEquals(0.693 - 2 * 0.5 * 0.673, classifier.informationGain(instances, 2));
-		assertEquals(0.693 - (0.8 * 0.6615632 + 0.2 * 0), classifier.informationGain(instances, 3));
+		assertEquals(0.693, classifier.informationGain(instances, 1), 0.001);
+		assertEquals(0.693 - 2 * 0.5 * 0.693, classifier.informationGain(instances, 2), 0.001);
+		assertEquals(0.693 - (0.8 * 0.6615632 + 0.2 * 0), classifier.informationGain(instances, 3), 0.001);
 	}
 }
