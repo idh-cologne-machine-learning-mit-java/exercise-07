@@ -16,7 +16,7 @@ public class Classifier {
 	public double entropy(Instances instances) {
 		double ent = 0.0;
 		
-		//This should be in it's own method and should be tested. Sorry
+		//This should be in it's own method and should be tested individually. Sorry
 		HashMap<Double, Integer> classCounts = new HashMap<Double, Integer>();
 		for(int i = 0; i < instances.numInstances(); i++) {
 			double cls;
