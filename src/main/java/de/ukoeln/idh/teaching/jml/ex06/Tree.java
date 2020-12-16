@@ -17,6 +17,8 @@ public class Tree {
 	}
 
 	public boolean isLeaf() {
+		if (this.children == null || this.children.length == 0)
+			return true;
 		return false;
 	}
 }
