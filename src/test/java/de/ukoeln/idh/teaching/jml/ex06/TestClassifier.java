@@ -82,7 +82,9 @@ public class TestClassifier {
 	@Test
 	public void testEntropy() throws IOException {
 		// values taken from slides
-		assertEquals(0.0, classifier.entropy(generateDataset(1, new int[] { 100 })), 1e-03);
+		Instances g = generateDataset(1, new int[] { 100 });
+		System.out.println(g.numAttributes());
+		assertEquals(0.0, classifier.entropy(g), 1e-03);
 		assertEquals(0.693, classifier.entropy(generateDataset(2, new int[] { 50, 50 })), 1e-03);
 		assertEquals(0.562, classifier.entropy(generateDataset(2, new int[] { 75, 25 })), 1e-03);
 		assertEquals(1.386294, classifier.entropy(generateDataset(4, new int[] { 25, 25, 25, 25 })), 1e-03);
@@ -96,7 +98,7 @@ public class TestClassifier {
 				classifier.entropy(generateDataset(10, new int[] { 5, 25, 10, 5, 5, 10, 10, 10, 10, 10 })), 1e-03);
 
 		Instances instances = new Instances(new FileReader("src/test/resources/ig.arff"));
-		assertEquals(0.693, classifier.entropy(instances));
+		assertEquals(0.693, classifier.entropy(instances), 1e-03);
 	}
 
 	@Test
