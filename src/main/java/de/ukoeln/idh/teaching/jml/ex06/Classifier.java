@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.UnassignedClassException;
@@ -50,7 +51,31 @@ public class Classifier {
 	 * calculates information gain for a individual feature
 	 */
 	public double informationGain(Instances instances, int attributeIndex) {
-		// TODO: implement
-		return 0.0;
+		double entropy = this.entropy(instances);
+
+		int attIndex = attributeIndex - 1;
+		int distValues = instances.numDistinctValues(attIndex);
+		int numInstances = instances.numInstances();
+		
+		Instances[] splits = new Instances[distValues];
+		
+		for (int i = 0; i < distValues; i++) 
+			splits[i] = new Instances(instances, numInstances);
+		
+		Enumeration<Instance> e = instances.enumerateInstances();
+		
+		while (e.hasMoreElements()) {
+			Instance instance = e.nextElement();
+			splits[(int) instance.value(instances.attribute(attIndex))].add(instance);
+		}
+
+		double ig = entropy;
+		
+		for (int i = 0; i < distValues; i++) {
+			double div = (double) splits[i].numInstances() / (double) numInstances;
+			ig -= div * this.entropy(splits[i]);
+		}
+		
+		return ig;
 	}
 }
