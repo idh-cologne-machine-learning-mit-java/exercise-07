@@ -4,7 +4,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.UnassignedClassException;
