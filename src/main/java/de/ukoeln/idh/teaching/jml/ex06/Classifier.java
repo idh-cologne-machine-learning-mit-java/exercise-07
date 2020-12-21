@@ -45,7 +45,7 @@ public class Classifier {
 		double attValue = 0;
 		instances.sort(attIndex);
 		for (int i=0; i < instances.numInstances(); i++) {
-			if(instances.get(i).value(attIndex) != attValue){
+			if(instances.get(i).value(attIndex) != attValue || i==0){
 				attValues.add(i);
 				attValue = instances.get(i).value(attIndex);
 			}
@@ -64,6 +64,6 @@ public class Classifier {
 		}
 		
 		return unweightedEntropy - weightedEntropy;
-	
+
 	}
 }
