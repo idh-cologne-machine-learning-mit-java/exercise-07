@@ -1,10 +1,11 @@
 package de.ukoeln.idh.teaching.jml.ex06;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import weka.core.Attribute;
 import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.unsupervised.instance.RemoveWithValues;
 
 public class Classifier {
 
@@ -53,9 +54,32 @@ public class Classifier {
 	 * calculates information gain for a individual feature
 	 */
 	public double informationGain(Instances instances, int attributeIndex) {
-	double infogain = 0.693;
-	return infogain;
+		double origEntropy = entropy(instances);
+		double currentEntropy;
+		double weightedSum = 0d;
+		Instances split;
+		
+		Attribute attrSplitOn = instances.attribute(attributeIndex);
+		
+		RemoveWithValues filter = new RemoveWithValues();
+		//Sets index of the attribute used
+		filter.setAttributeIndex(Integer.toString(attributeIndex));
+		
+		for(int i = 0; i < attrSplitOn.numValues(); i++) {
+			//Set which nominal labels are to be included in the selection
+			filter.setNominalIndices(Integer.toString(i +1));
+			try {
+				filter.setInputFormat(instances);
+				split = Filter.useFilter(instances, filter);
+				currentEntropy = entropy(split);
+				weightedSum += split.size() * currentEntropy;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return origEntropy - weightedSum / instances.size();
+	}
 
 	
-	}
 }
