@@ -16,6 +16,7 @@ public class Classifier {
 		
 		double entropy = 0.0;
 		HashMap <Double, Integer> classMap = new HashMap <Double, Integer>();
+		
 		for(int i=0; i < instances.numInstances(); i++) {
 				double key = instances.get(i).classValue();
 				if(!classMap.containsKey(key)) {
@@ -40,7 +41,32 @@ public class Classifier {
 	 * calculates information gain for a individual feature
 	 */
 	public double informationGain(Instances instances, int attributeIndex) {
-		// TODO: implement
-		return 0.0;
+		ArrayList <Integer> attValues = new ArrayList <Integer>();
+		int attIndex = attributeIndex -1;
+		double attValue = 0;
+		instances.sort(attIndex);
+		
+		for(int i=0; i < instances.numInstances(); i++) {
+			if(instances.get(i).value(attIndex) != attValue || i==0) {
+				attValues.add(i);
+				attValue = instances.get(i).value(attIndex);
+			}
+		}
+		
+		attValues.add(instances.numInstances());
+		
+		double unweightedEntropy = this.entropy(instances);
+		double weightedEntropy = 0;
+		Instances[] splits = new Instances [instances.numDistinctValues(attIndex)];
+		double[] splitsEntropy = new double [instances.numDistinctValues(attIndex)];
+		
+		for(int i=0; i < instances.numDistinctValues(attIndex); i++) {
+			splits[i] = new Instances(instances, attValues.get(i), attValues.get(i+1) - attValues.get(i));
+			double split = (double) splits[i].numInstances() / instances.numInstances();
+			splitsEntropy[i] = entropy(splits[i]);
+			weightedEntropy += split * splitsEntropy[i];
+		}
+		
+		return unweightedEntropy + weightedEntropy;
 	}
 }

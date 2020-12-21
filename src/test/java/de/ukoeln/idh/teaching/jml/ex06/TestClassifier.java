@@ -96,12 +96,14 @@ public class TestClassifier {
 				classifier.entropy(generateDataset(10, new int[] { 5, 25, 10, 5, 5, 10, 10, 10, 10, 10 })), 1e-03);
 
 		Instances instances = new Instances(new FileReader("src/test/resources/ig.arff"));
-		assertEquals(0.693, classifier.entropy(instances));
+		instances.setClassIndex(instances.numAttributes() - 1);
+ 		assertEquals(0.693, classifier.entropy(instances), 1e-03);
 	}
 
 	@Test
 	public void testInformationGain() throws IOException {
 		Instances instances = new Instances(new FileReader("src/test/resources/ig.arff"));
+		instances.setClassIndex(instances.numAttributes() - 1);
 
 		assertEquals(0.693, classifier.informationGain(instances, 1), 1e-03);
 		assertEquals(0.693 - 2 * 0.5 * 0.693, classifier.informationGain(instances, 2), 1e-03);
