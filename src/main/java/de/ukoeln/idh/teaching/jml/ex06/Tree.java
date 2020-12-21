@@ -17,6 +17,10 @@ public class Tree {
 	}
 
 	public boolean isLeaf() {
-		return false;
+		if (this.children == null || this.children instanceof Tree[] && this.children.length < 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
