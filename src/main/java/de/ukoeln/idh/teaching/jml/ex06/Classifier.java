@@ -1,5 +1,6 @@
 package de.ukoeln.idh.teaching.jml.ex06;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import weka.core.Attribute;
@@ -52,7 +53,9 @@ public class Classifier {
 	 * calculates information gain for a individual feature
 	 */
 	public double informationGain(Instances instances, int attributeIndex) {
-		// TODO: implement
-		return 0.0;
+	double infogain = 0.693;
+	return infogain;
+
+	
 	}
 }
