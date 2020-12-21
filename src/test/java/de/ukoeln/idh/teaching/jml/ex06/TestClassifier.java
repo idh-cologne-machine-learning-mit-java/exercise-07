@@ -104,7 +104,7 @@ public class TestClassifier {
 	@Test
 	public void testInformationGain() throws IOException {
 		Instances instances = new Instances(new FileReader("src/test/resources/ig.arff"));
-
+		instances.setClassIndex(instances.numAttributes()-1);
 		assertEquals(0.693, classifier.informationGain(instances, 1), 1e-03);
 		assertEquals(0.693 - 2 * 0.5 * 0.693, classifier.informationGain(instances, 2), 1e-03);
 		assertEquals(0.693 - (0.8 * 0.6615632 + 0.2 * 0), classifier.informationGain(instances, 3), 1e-03);

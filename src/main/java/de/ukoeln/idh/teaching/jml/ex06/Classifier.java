@@ -4,8 +4,11 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.unsupervised.instance.RemoveWithValues;
 
 public class Classifier {
 
@@ -45,14 +48,30 @@ public class Classifier {
 	 * calculates information gain for a individual feature
 	 */
 	public double informationGain(Instances instances, int attributeIndex) {
-		// TODO: implement
+		// entropy of whole dataset
 		double entropyBefore = entropy(instances);
-		// TODO split instances according to attributeValue
 		
+		Attribute attrSplitOn = instances.attribute(attributeIndex);
 		
+		RemoveWithValues filter = new RemoveWithValues();
+		filter.setAttributeIndex(Integer.toString(attributeIndex));
 		
-		
-		// TODO compute entropy for each part
-		return 0.0;
+		// split data set on each attribute value and compute sub data set entropy
+		Instances instancesSplit;
+		double currentEntropy;
+		double weightedSum = 0d;
+		for(int i = 0; i < attrSplitOn.numValues(); i++) {
+			filter.setNominalIndices(Integer.toString(i +1));
+			try {
+				filter.setInputFormat(instances);
+				instancesSplit = Filter.useFilter(instances, filter);
+				currentEntropy = entropy(instancesSplit);
+				weightedSum += instancesSplit.size() * currentEntropy;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return entropyBefore - weightedSum / instances.size();
 	}
 }
