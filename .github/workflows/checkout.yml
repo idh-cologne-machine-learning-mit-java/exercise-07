@@ -8,10 +8,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          submodules: false
-      - name: setup java
+          submodules: false 
+      - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: '11.0.1'
-      - name: test Maven
-        run: mvn test
+          java-version: "1.8"
+      - name: Run maven
+        run: "mvn test"
