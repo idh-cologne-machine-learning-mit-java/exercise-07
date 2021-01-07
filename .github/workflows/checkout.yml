@@ -1,0 +1,17 @@
+name: Checkout
+on: push
+jobs:
+  checkout:
+    name: demo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+      - name: Java setup
+        uses: actions/setup-java@v1
+        with:
+          java-version: "1.8"
+      - name: Maven setup
+        run: "mvn test"
