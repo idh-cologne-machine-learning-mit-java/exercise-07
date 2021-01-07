@@ -7,13 +7,18 @@ public class Tree {
 	int attributeIndex = -1;
 	double prediction = Double.NaN;
 
+	// nur von Kategorienfeats ausgegangen
+
 	public double predict(Instance instance) {
-		// TODO: Implement
-		// recursive case
-		return 0.0;
+		double attributeValue = instance.value(attributeIndex);
+		if (this.isLeaf()){
+			return prediction;
+		}else {
+			return this.children[(int) attributeValue].predict(instance);
+		}
 	}
 
 	public boolean isLeaf() {
-		return false;
+		return children == null || children.length == 0;
 	}
 }
