@@ -9,11 +9,14 @@ public class Tree {
 
 	// nur von Kategorienfeats ausgegangen
 
-	public double predict(Instance instance) {
+	public double predict(Instance instance) throws IllegalArgumentException {
+		if (instance == null) {
+			throw new IllegalArgumentException("Please provide an instance");
+		}
 		double attributeValue = instance.value(attributeIndex);
-		if (this.isLeaf()){
+		if (this.isLeaf()) {
 			return prediction;
-		}else {
+		} else {
 			return this.children[(int) attributeValue].predict(instance);
 		}
 	}
